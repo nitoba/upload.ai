@@ -1,0 +1,25 @@
+{
+  "name": "upload.ai",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "generate": "drizzle-kit generate:pg",
+    "push": "drizzle-kit push:pg",
+    "studio": "drizzle-kit studio"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/pg": "^8.10.2",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.19.13"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.28.6",
+    "elysia": "^0.6.23",
+    "pg": "^8.11.3"
+  }
+}

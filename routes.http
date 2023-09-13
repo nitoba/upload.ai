@@ -1,0 +1,11 @@
+### ---------------------------- UPLOAD VIDEO ----------------------------
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio.mp3"
+Content-Type: audio/mpeg
+
+< ./audio.mp3
+--boundary--
+### -------------------------------------------------------------------------

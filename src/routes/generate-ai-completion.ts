@@ -33,6 +33,7 @@ generateAICompletion.post('/ai/completion', async ({ body, set }) => {
         
     const promptMessage = prompt.replace('{transcription}', video.transcription)
 
+    // TODO: call OpenAI library to create the response about the video/audio content
     // const response = await openai.chat.completions.create({
     //     model: 'gpt-3.5-turbo-16k',
     //     temperature,

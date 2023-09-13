@@ -34,8 +34,16 @@ createTranscriptionRouter.post('/videos/:videoId/transcription', async ({ params
     const audioReadStream = createReadStream(videoPath)
 
     //TODO: call OpenAI library to transcribe audio
+    // const response = await openai.audio.transcriptions.create({
+    //     file: audioReadStream,
+    //     model: 'whisper-1',
+    //     language: 'pt',
+    //     response_format: 'json',
+    //     temperature: 0,
+    //     prompt,
+    // })
 
-    const transcription = ''
+    const transcription = 'response.text'
 
     await db.update(videos).set({ transcription })
 

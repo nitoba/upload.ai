@@ -18,6 +18,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.33.2",
     "drizzle-orm": "^0.28.6",
     "elysia": "^0.6.23",
     "pg": "^8.11.3",

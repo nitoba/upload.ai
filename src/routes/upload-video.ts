@@ -1,7 +1,8 @@
+import Elysia from "elysia";
 import { BunFile } from "bun";
 import { randomUUID } from "crypto";
-import Elysia from "elysia";
-import { basename, extname, resolve } from "path";
+import { basename, extname } from "path";
+import { supabaseClient } from "../lib/supabase";
 
 export const uploadVideoRouter = new Elysia()
 
@@ -25,13 +26,23 @@ uploadVideoRouter. post('/videos', async ({ request, set }) => {
     const fileBaseName = basename(data.name as string, extension)
     const fileUploadName = `${fileBaseName}-${randomUUID()}${extension}`
 
-    const pathToSaveFile = resolve(import.meta.dir, '..', '..', 'tmp', fileUploadName)
-
     const fileAsStream = data.stream()
 
     for await (const chunk of fileAsStream) {
-        await Bun.write(pathToSaveFile, chunk)
+        const { error } = await supabaseClient.storage.from('videos').upload(fileUploadName, chunk, {
+            contentType: 'audio/mpeg',
+            upsert: true,
+        })
+    
+        if (error) {
+            fileAsStream.cancel()
+            console.log(JSON.stringify(error, undefined, 2))
+            set.status = 400
+            return { 
+                error: error.message
+            }
+        } else {
+            return { message: 'video uploaded with success!' }
+        }
     }
-
-    return { message: 'Uploading video' }
 })

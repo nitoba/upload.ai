@@ -5,7 +5,6 @@ import { createTranscriptionRouter } from './routes/create-transcription'
 import { generateAICompletion } from './routes/generate-ai-completion'
 
 const app = new Elysia()
-
 app.use(getAllPromptsRouter)
 app.use(uploadVideoRouter)
 app.use(createTranscriptionRouter)

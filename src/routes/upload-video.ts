@@ -31,11 +31,11 @@ uploadVideoRouter.post('/videos', async ({ request, set }) => {
     const fileAsStream = file.stream()
 
     for await (const chunk of fileAsStream) {
-        const { error, data } = await supabaseClient.storage.from('videos').upload(fileUploadName, chunk, {
+        const { error } = await supabaseClient.storage.from('videos').upload(fileUploadName, chunk, {
             contentType: 'audio/mpeg',
             upsert: true,
         })
-    
+
         if (error) {
             fileAsStream.cancel()
             console.log(JSON.stringify(error, undefined, 2))
@@ -43,16 +43,16 @@ uploadVideoRouter.post('/videos', async ({ request, set }) => {
             return { 
                 error: error.message
             }
-        } else {
-            const videoToInsert = {
-                id: randomUUID(),
-                name: file.name ?? fileUploadName,
-                path: data.path,
-            }
-
-            await db.insert(videos).values(videoToInsert)
-
-            return { message: 'video uploaded with success!', video: videoToInsert }
         }
     }
+
+    const videoToInsert = {
+        id: randomUUID(),
+        name: file.name ?? fileUploadName,
+        path: fileUploadName,
+    }
+
+    await db.insert(videos).values(videoToInsert)
+
+    return { message: 'video uploaded with success!', video: videoToInsert }
 })
